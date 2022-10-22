@@ -15,6 +15,11 @@ public class PokemonController {
     @Autowired
     PokemonService pokemonService;
 
+    @ExceptionHandler
+    public ResponseEntity<String> handleExceptions(PokemonNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
+
     @GetMapping("/pokemon")
     public ResponseEntity<List<Pokemon>> getAllPokemon() {
         return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getAllPokemon());

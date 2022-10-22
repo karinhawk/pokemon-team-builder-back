@@ -13,7 +13,4 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
     //these are usually more unique to our database
 
 
-    @Query(value="SELECT DISTINCT id FROM greeting", nativeQuery = true)
-    List<Long> getDistinctIds();
-
 }
