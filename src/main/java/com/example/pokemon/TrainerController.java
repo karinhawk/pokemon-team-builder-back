@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,9 +32,16 @@ public class TrainerController {
         return ResponseEntity.status(HttpStatus.OK).body(trainerService.getTrainer());
     }
 
+    @GetMapping("/trainer/{id}")
+    public ResponseEntity<Trainer> getTrainerById(@PathVariable long id) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(trainerService.getTrainerById(id));
+
+    }
+
     @PutMapping("/trainer/{id}")
     public ResponseEntity<Trainer> updateTrainer(@RequestBody Trainer updatedTrainer, @PathVariable long id) {
-        trainerService.getTrainerById(id);
+        updatedTrainer.setId(id);
         trainerService.updateTrainer(updatedTrainer, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(updatedTrainer);
     }

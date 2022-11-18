@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
-    //so many default methods we can use!!
-    //if we want additional methods we refer to them as derived methods
-    //these are usually more unique to our database
+    @Query(value="SELECT DISTINCT type FROM pokemon ORDER BY type", nativeQuery = true)
+    List<String> getDistinctTypes();
 
 
+    List<Pokemon> getAllByType(String type);
 }

@@ -22,11 +22,6 @@ public class TrainerService {
         trainerRepository.save(updatedTrainer);
     }
 
-    public Trainer getTrainerById(long id) {
-        Optional<Trainer> trainer = trainerRepository.findById(id);
-        return trainer.get();
-    }
-
     @Transactional
     public void deleteTrainerById(long id) {
         if (!trainerRepository.existsById(id)) {
@@ -38,5 +33,15 @@ public class TrainerService {
 
     public void addTrainer(Trainer trainer) {
         trainerRepository.save(trainer);
+    }
+
+    public Trainer getTrainerById(long id) {
+        Optional<Trainer> trainer = trainerRepository.findById(id);
+
+        if (trainer.isEmpty()) {
+            throw new TrainerNotFoundException();
+        }
+
+        return trainer.get();
     }
 }

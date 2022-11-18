@@ -20,14 +20,30 @@ public class PokemonController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
+//    @GetMapping("/pokemon")
+//    public ResponseEntity<List<Pokemon>> getAllPokemon() {
+//        return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getAllPokemon());
+//    }
+
     @GetMapping("/pokemon")
-    public ResponseEntity<List<Pokemon>> getAllPokemon() {
+    public ResponseEntity<List<Pokemon>> getAllPokemon(@RequestParam(required = false) String type) {
+
+        if (type != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getPokemonByType(type));
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getAllPokemon());
+
     }
 
     @GetMapping("/pokemon/{id}")
     public ResponseEntity<Pokemon> getPokemonById(@PathVariable long id){
         return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getPokemonById(id));
+    }
+
+    @GetMapping("/pokemon/types")
+    public ResponseEntity<List<String>> getPokemonTypes() {
+        return ResponseEntity.status(HttpStatus.OK).body(pokemonService.getTypes());
     }
 
     @PutMapping("/pokemon/{id}")
@@ -36,4 +52,5 @@ public class PokemonController {
         pokemonService.updatePokemonTrainer(id, updatedPokemon);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(updatedPokemon);
     }
+
 }

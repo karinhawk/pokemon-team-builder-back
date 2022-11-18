@@ -30,7 +30,18 @@ public class PokemonService {
     }
 
     public void updatePokemonTrainer(long id, Pokemon updatedPokemon) {
-        updatedPokemon.setTrainer("trainer");
+        if(updatedPokemon.getTrainer() == null){
+        updatedPokemon.setTrainer("trainer");} else {
+            updatedPokemon.setTrainer(null);
+        }
         pokemonRepository.save(updatedPokemon);
+    }
+
+    public List<String> getTypes() {
+        return pokemonRepository.getDistinctTypes();
+    }
+
+    public List<Pokemon> getPokemonByType(String type) {
+        return pokemonRepository.getAllByType(type);
     }
 }
